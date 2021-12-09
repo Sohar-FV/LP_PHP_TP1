@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+
+  mysql:
+    image: mysql
+    container_name: mysql_lp-web
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    networks:
+      - dev
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_lp-web
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+    networks:
+      - dev
+
+  maildev:
+    image: maildev/maildev
+    container_name: maildev_lp-web
+    command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+    ports:
+      - "8082:80"
+    restart: always
+    networks:
+      - dev
+
+  web:
+    build: .docker/php
+    container_name: web_lp-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./.docker/php/vhosts:/etc/apache2/sites-enabled
+      - .:/var/www/lp-web
+    restart: always
+    networks:
+      - dev
+networks:
+  dev:
+
+volumes:
+  db-data:
