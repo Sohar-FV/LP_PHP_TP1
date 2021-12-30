@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 
 services:
 
@@ -45,7 +45,7 @@ services:
     build: .docker/php
     container_name: web_lp-web
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./.docker/php/vhosts:/etc/apache2/sites-enabled
       - .:/var/www/lp-web
