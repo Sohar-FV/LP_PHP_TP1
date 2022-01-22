@@ -30,7 +30,7 @@ class DisplayYCommand extends Command
 
         for($i=0; $i < $x; $i++)
         {
-            $output->writeln($x);
+            $output->writeln($y);
         }
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
