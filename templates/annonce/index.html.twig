@@ -4,32 +4,39 @@
 
 {% block body %}
 
-    <style>
-        .annonce {
-            width: 500px;
-            margin: 5px;
-            padding: 5px;
-
-            border: 1px solid black;
-            border-radius : 4px;
-        }
-
-    </style>
 
     <div>
         <h3>Annonces</h3>
         <div>
-            {% for annonce in annonces %}
-
-                    <div class="annonce">
-                        {{ annonce.titre }}
-                        <p>{{ annonce.contenu }}</p>
-                        <p>Prix : {{ annonce.prix }} € <p>
-                        <p>Code Postal : {{ annonce.code_postal }}<p>
-                        <p>Code Postal : {{ annonce.code_postal }}<p>
-                    </div>
-
-            {% endfor %}
+            <a class="btn btn-primary" href="{{path('new_annonce')}}">Add Annonce</a>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="15%">Titre</th>
+                        <th width="10%">Category</th>
+                        <th width="40%">Content</th>
+                        <th width="5%">Prix</th>
+                        <th width="8%">Code postal</th>
+                        <th width="27%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for annonce in annonces %}
+                    <tr>
+                        <td>{{ annonce.titre }}</td>
+                        <td>{{ annonce.category.name }}</td>
+                        <td>{{ annonce.contenu }}</td>
+                        <td>{{ annonce.prix }}</td>
+                        <td>{{ annonce.codePostal }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{path('edit_annonce',{id:annonce.id})}}">Modifier</a>
+                            <a class="btn btn-primary" href="{{path('delete_annonce',{id:annonce.id})}}">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </div>
         </div>
     </div>
 

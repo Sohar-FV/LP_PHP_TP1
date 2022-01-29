@@ -35,17 +35,23 @@ class Annonce
     /**
      * @ORM\Column(type="integer")
      */
-    private $code_postal;
+    private $codePostal;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_creation;
+    private $dateCreation;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $photos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="annonces")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     public function getId(): ?int
     {
@@ -90,24 +96,24 @@ class Annonce
 
     public function getCodePostal(): ?int
     {
-        return $this->code_postal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(int $code_postal): self
+    public function setCodePostal(int $codePostal): self
     {
-        $this->code_postal = $code_postal;
+        $this->codePostal = $codePostal;
 
         return $this;
     }
 
     public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->date_creation;
+        return $this->dateCreation;
     }
 
-    public function setDateCreation(\DateTimeInterface $date_creation): self
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
-        $this->date_creation = $date_creation;
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }
@@ -120,6 +126,18 @@ class Annonce
     public function setPhotos(?string $photos): self
     {
         $this->photos = $photos;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
