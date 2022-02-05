@@ -6,7 +6,18 @@
 
 
     <div>
-        <h3>Annonces</h3>
+        <div class="d-flex justify-content-between">
+            <h3>Annonces</h3>
+            <div>
+                {% if user %}
+                    {{ user.username }}
+                    <a class="btn btn-primary" href="{{path('app_logout')}}">Log out</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{{path('login')}}">Login</a>
+                    <a class="btn btn-primary" href="{{path('register')}}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
         <div>
             <a class="btn btn-primary" href="{{path('new_annonce')}}">Add Annonce</a>
             <table class="table table-bordered table-striped">

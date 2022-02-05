@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 use App\Entity\Annonce;
+
+use App\Entity\User;
 use App\Form\AnnonceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +24,7 @@ class AnnonceController extends AbstractController
 
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces,
+            'user' => $this->getUser()
         ]);
     }
 
@@ -41,6 +44,16 @@ class AnnonceController extends AbstractController
         if ($form->isSubmitted()) {
             $annonce = $form->getData();
             $annonce->setDateCreation(new \Datetime);
+
+            //temp
+            $user = new User();
+            $user->setUsername("bob1");
+            $user->setPassword("123456");
+            $manager->persist($user);
+            $manager->flush();
+            //temp
+
+            $annonce->setUser($user);
 
             $manager->persist($annonce);
             $manager->flush();
